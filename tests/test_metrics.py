@@ -2,13 +2,13 @@
 
 import pytest
 
-import protean.meter
+import pytheus.meter
 
 
 def test_gauge(mocker):
     with mocker.patch('time.time', return_value=407424600):
 
-        g = protean.meter.Gauge('metric_name', "this metric's description")
+        g = pytheus.meter.Gauge('metric_name', "this metric's description")
         g.set(1.0, hello='world', another_label='somethingelse')
         g.set(2.0, xpto='blah', another_label='somethingelse')
         g.set(3.0, somethingelse='entirely')
@@ -28,7 +28,7 @@ def test_gauge(mocker):
 def test_counter(mocker):
 
     with mocker.patch('time.time', return_value=407424600):
-        c = protean.meter.Counter('metric_name', "this metric's description")
+        c = pytheus.meter.Counter('metric_name', "this metric's description")
         c.inc(hello='world', another_label='somethingelse')
         c.inc(2.0, hello='world', another_label='somethingelse')
         c.inc(5.0, random='label')
@@ -46,7 +46,7 @@ def test_counter(mocker):
 
 def test_summary():
     buckets = [0.1, 0.5, 1.0]
-    s = protean.meter.Summary("metric_name",
+    s = pytheus.meter.Summary("metric_name",
                                 buckets,
                                 "this metric's description")
     s.observe(0.001, hello='world', moarlabel='blah')
@@ -79,7 +79,7 @@ def test_summary():
 
 def test_histogram():
     buckets = [1, 10, 20]
-    h = protean.meter.Histogram("metric_name",
+    h = pytheus.meter.Histogram("metric_name",
                                 buckets,
                                 "this metric's description")
     h.observe(0.001, hello='world', moarlabel='blah')
